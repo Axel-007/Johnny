@@ -9,6 +9,7 @@ namespace SpriteKind {
     export const dog = SpriteKind.create()
     export const pet = SpriteKind.create()
     export const intro = SpriteKind.create()
+    export const Game_red = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -84,6 +85,49 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         `],
     250,
     true
+    )
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Game_red, function (sprite, otherSprite) {
+    music.playMelody("C E C F - - - - ", 400)
+    animation.runImageAnimation(
+    door,
+    [img`
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        ................................
+        e44e44e44e44e44ef44e44e44e44e44e
+        e44e44e44e44e44ef44e44e44e44e44e
+        e44e44e44e44e44ef44e44e44e44e44e
+        `,img`
+        eee..........................eee
+        444..........................444
+        444..........................444
+        eee..........................eee
+        444..........................444
+        444..........................444
+        eee..........................eee
+        444..........................444
+        444..........................444
+        eee..........................eee
+        444..........................444
+        444..........................444
+        eee..........................eee
+        444..........................444
+        444..........................444
+        eee..........................eee
+        `],
+    500,
+    false
     )
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -251,6 +295,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Game, function (sprite, otherSpr
     music.stopAllSounds()
     music.playMelody("C5 A - F - A - C5 ", 600)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.door, function (sprite, otherSprite) {
+    Johnny.setPosition(304, 650)
+})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     Johnny,
@@ -364,6 +411,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.monsterboss, function (sprite, o
 let status_bar_list: StatusBarSprite[] = []
 let myDart: Dart = null
 let Johnny: Sprite = null
+let door: Sprite = null
 let UomoSuLeva = 0
 UomoSuLeva = 0
 scene.setBackgroundColor(13)
@@ -776,7 +824,7 @@ let fontana = sprites.create(img`
     eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     `, SpriteKind.fontana)
 fontana.setPosition(1696, 1520)
-let door = sprites.create(img`
+door = sprites.create(img`
     ................................
     ................................
     ................................
@@ -788,11 +836,11 @@ let door = sprites.create(img`
     ................................
     ................................
     ................................
-    ........5...............5.......
-    .......555.............555......
-    ccdcccccccccccdcfdccccccccccccdc
-    ccccccccdcccccccfcccccccdccccccc
-    6666666666666666f666666666666666
+    ................................
+    ................................
+    e44e44e44e44e44ef44e44e44e44e44e
+    e44e44e44e44e44ef44e44e44e44e44e
+    e44e44e44e44e44ef44e44e44e44e44e
     `, SpriteKind.door)
 door.setPosition(304, 653)
 let red = sprites.create(img`
@@ -812,8 +860,8 @@ let red = sprites.create(img`
     d b b b b b b b b b b b b b b c 
     d b b b b b b b b b b b b b b c 
     b c c c c c c c c c c c c c c c 
-    `, SpriteKind.Game)
-red.setPosition(0, 0)
+    `, SpriteKind.Game_red)
+red.setPosition(360, 552)
 let blue = sprites.create(img`
     d d d d d d d d d d d d d d d b 
     d b b b b b b b b b b b b b b c 
@@ -1170,8 +1218,9 @@ Johnny = sprites.create(img`
     . . . . f f f f f f . . . . 
     . . . . f f . . f f . . . . 
     `, SpriteKind.Player)
+// at door monster
+Johnny.setPosition(304, 650)
 scene.cameraFollowSprite(Johnny)
-Johnny.setPosition(1000, 100)
 controller.moveSprite(Johnny, 60, 60)
 let statusbar = statusbars.create(40, 10, StatusBarKind.Health)
 statusbar.setColor(7, 2, 6)
