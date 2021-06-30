@@ -10,6 +10,7 @@ namespace SpriteKind {
     export const pet = SpriteKind.create()
     export const intro = SpriteKind.create()
     export const Game_red = SpriteKind.create()
+    export const Open_door = SpriteKind.create()
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -89,8 +90,10 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Game_red, function (sprite, otherSprite) {
     music.playMelody("C E C F - - - - ", 400)
+    door.destroy()
+    Open_door.setPosition(304, 653)
     animation.runImageAnimation(
-    door,
+    Open_door,
     [img`
         ................................
         ................................
@@ -122,9 +125,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Game_red, function (sprite, othe
         444..........................444
         444..........................444
         eee..........................eee
-        444..........................444
-        444..........................444
-        eee..........................eee
+        444ffffffffffffffffffffffffff444
+        444ffffffffffffffffffffffffff444
+        eeeffffffffffffffffffffffffffeee
         `],
     500,
     false
@@ -213,6 +216,15 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile9`, function (sprite, l
     pause(1000)
     controller.moveSprite(Johnny, 60, 60)
     music.playMelody("A A B A G F - B ", 120)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Open_door, function (sprite, otherSprite) {
+    statusbar2 = statusbars.create(40, 10, StatusBarKind.Health)
+    statusbar2.setColor(5, 15, 4)
+    statusbar2.setLabel("Boss", 2)
+    statusbar2.positionDirection(CollisionDirection.Top)
+    statusbar2.setBarBorder(1, 1)
+    pause(200)
+    monster_boss.follow(Johnny, 40)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -410,12 +422,15 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.monsterboss, function (sprite, o
 })
 let status_bar_list: StatusBarSprite[] = []
 let myDart: Dart = null
+let statusbar2: StatusBarSprite = null
 let Johnny: Sprite = null
 let door: Sprite = null
+let Open_door: Sprite = null
+let monster_boss: Sprite = null
 let UomoSuLeva = 0
 UomoSuLeva = 0
 scene.setBackgroundColor(13)
-let monster_boss = sprites.create(img`
+monster_boss = sprites.create(img`
     ......................aaaaaaaaaa..............................
     ......................aaaaaaaaaa..............................
     ....................aaaaaaaaaaaaaa............................
@@ -824,6 +839,25 @@ let fontana = sprites.create(img`
     eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     `, SpriteKind.fontana)
 fontana.setPosition(1696, 1520)
+Open_door = sprites.create(img`
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    e44e44e44e44e44ef44e44e44e44e44e
+    e44e44e44e44e44ef44e44e44e44e44e
+    e44e44e44e44e44ef44e44e44e44e44e
+    `, SpriteKind.Open_door)
+Open_door.setPosition(0, 1000)
 door = sprites.create(img`
     ................................
     ................................
