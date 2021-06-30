@@ -88,6 +88,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     true
     )
 })
+scene.onOverlapTile(SpriteKind.Enemy, assets.tile`tile89`, function (sprite, location) {
+	
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Game_red, function (sprite, otherSprite) {
     music.playMelody("C E C F - - - - ", 400)
     door.destroy()
@@ -218,11 +221,12 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile9`, function (sprite, l
     music.playMelody("A A B A G F - B ", 120)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Open_door, function (sprite, otherSprite) {
-    statusbar2 = statusbars.create(40, 10, StatusBarKind.Health)
+    statusbar2 = statusbars.create(40, 10, StatusBarKind.EnemyHealth)
     statusbar2.setColor(5, 15, 4)
     statusbar2.setLabel("Boss", 2)
     statusbar2.positionDirection(CollisionDirection.Top)
     statusbar2.setBarBorder(1, 1)
+    statusbar2.max = 12
     pause(200)
     monster_boss.follow(Johnny, 40)
 })
@@ -1257,6 +1261,7 @@ Johnny.setPosition(304, 650)
 scene.cameraFollowSprite(Johnny)
 controller.moveSprite(Johnny, 60, 60)
 let statusbar = statusbars.create(40, 10, StatusBarKind.Health)
+statusbar.max = 10
 statusbar.setColor(7, 2, 6)
 statusbar.setLabel("HP", 15)
 statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
